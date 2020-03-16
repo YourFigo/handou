@@ -3,6 +3,9 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/handou-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/handou-item" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/handou-item/handou-item-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/handou-item/handou-item-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/handou-registry" charset="UTF-8" />
   </component>
 </project>
