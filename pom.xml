@@ -13,6 +13,7 @@
         <module>handou-registry</module>
         <module>handou-gateway</module>
         <module>handou-item</module>
+        <module>handou-common</module>
     </modules>
 
     <name>handou</name>
