@@ -6,7 +6,11 @@
 
     <groupId>cn.handou.parent</groupId>
     <artifactId>handou</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>handou-registry</module>
+    </modules>
 
     <name>handou</name>
     <description>Demo project for Spring Boot</description>
