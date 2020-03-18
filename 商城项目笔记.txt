@@ -1,0 +1,156 @@
+电商行业的一些常见模式：
+    B2C：商家对个人，如：亚马逊、当当等
+    C2C平台：个人对个人，如：闲鱼、拍拍网、ebay
+    B2B平台：商家对商家，如：阿里巴巴、八方资源网等
+    O2O：线上和线下结合，如：饿了么、电影票、团购等
+    P2P：在线金融，贷款，如：网贷之家、人人聚财等。
+    B2C平台：天猫、京东、一号店等
+
+一些专业术语
+SaaS：软件即服务
+SOA：面向服务
+RPC：远程过程调用
+RMI：远程方法调用
+PV：(page view)，即页面浏览量；
+    用户每1次对网站中的每个网页访问均被记录1次。用户对同一页面的多次访问，访问量累计
+UV：(unique visitor)，独立访客
+    指访问某个站点或点击某条新闻的不同IP地址的人数。在同一天内，uv只记录第一次进入网站的具有独立IP的访问者，在同一天内再次访问该网站则不计数。
+PV与带宽：
+    计算带宽大小需要关注两个指标：峰值流量和页面的平均大小。
+    计算公式是：网站带宽= ( PV * 平均页面大小（单位MB）* 8 )/统计时间（换算到秒）
+    为什么要乘以8？
+    网站大小为单位是字节(Byte)，而计算带宽的单位是bit，1Byte=8bit
+    这个计算的是平均带宽，高峰期还需要扩大一定倍数
+PV、QPS、并发
+    QPS：每秒处理的请求数量。
+    比如你的程序处理一个请求平均需要0.1S，那么1秒就可以处理10个请求。QPS自然就是10，多线程情况下，这个数字可能就会有所增加。
+    由PV和QPS如何需要部署的服务器数量？
+    根据二八原则，80%的请求集中在20%的时间来计算峰值压力：
+    （每日PV * 80%） / （3600s * 24 * 20%） * 每个页面的请求数  = 每个页面每秒的请求数量
+    然后除以服务器的QPS值，即可计算得出需要部署的服务器数量
+	
+环境：
+jdk 1.8
+maven 3.5
+springboot 2.0
+springcloud Finchley.SR2
+mybatis 1.3
+
+
+模块：
+handou：项目整体父工程
+handou-registry：服务注册中心（eureka）
+handou-gateway：网关和过滤器（zuul）
+handou-item：商品聚合模块
+    handou-item-interface：负责商品模块对外接口的子模块
+    handou-item-service：负责商品模块对内业务的子模块
+handou-common：通用工具类模块
+
+es6语法
+var 有一个问题，就是定义的变量有时会莫名奇妙的成为全局变量。let 所声明的变量，只在 let 命令所在的代码块内有效。const 声明的变量是常量，不能被修改。
+
+ES6为字符串扩展了几个新的API：
+    includes()：返回布尔值，表示是否找到了参数字符串。
+    startsWith()：返回布尔值，表示参数字符串是否在原字符串的头部。
+    endsWith()：返回布尔值，表示参数字符串是否在原字符串的尾部。
+
+在两个`之间的部分都会被作为字符串的值，不管你任意换行，比如：
+    let str = `hello
+        world`
+
+解构表达式：结构数组和对象
+    let arr = [1,2,3]
+    const [x,y,z] = arr; // x，y，z将与arr中的每个位置对应来取值
+    const person = {name:"jack",age:21,language: ['java','js','css']}
+    const {name,age,language} = person;  // 解构表达式获取值
+
+给函数设置默认值
+es6可以设默认值：
+    function fun(a , b = 1) {
+        return a / b;
+    }
+es6之前需要这样设置：
+    function fun(a , b) {
+        // 判断b是否为空，为空就给默认值1
+        b = b || 1;
+        return a / b;
+    }
+
+箭头函数： ()=>{}
+一个参数：
+    let fun = (i) => {console.log(i)} 可以简写为：
+    let fun = i => console.log(i);
+    调用： fun(10);
+多个参数：
+    let fun = (i,j) => {
+        const k = i+j;
+        console.log(k);
+        }
+    调用： fun(10,20);
+对象的函数属性简写:
+    let person = {
+        name: "jack",
+        // 以前：
+        eat1: function (food) {
+            console.log(this.name + "在吃" + food);
+        },
+        // 箭头函数版：
+        eat2: food => console.log(person.name + "在吃" + food), //这里拿不到this
+        // 简写版：
+        eat3(food){
+            console.log(this.name + "在吃" + food);
+        }
+    }
+    调用：
+        person.eat1("鸡蛋");
+        person.eat2("苹果");
+        person.eat3("香蕉");
+箭头函数结合解构表达式：
+有一个对象：
+const person = {
+    name:"jack",
+    age:21,
+    language: ['java','js','css']
+}
+我们要写一个函数只输出对象中的 name 属性，可以这么写：
+function hello(person) {
+    console.log("hello," + person.name)
+}
+如果使用箭头函数结合解构函数，参数不需要传入一个大对象：
+var hi = ({name}) =>  console.log("hi," + name);
+
+map和reduce
+map()：接收一个函数，将原数组中的所有元素用这个函数处理后放入新数组返回。
+    let arr = ['1','20','-5','3'];
+    arr = arr.map(s => parseInt(s));
+reduce()：接收一个函数（必须）和一个初始值（可选）。
+第一个参数（函数）接收两个参数：
+    第一个参数是上一次reduce处理的结果
+    第二个参数是数组中要处理的下一个元素
+reduce()会从左到右依次把数组中的元素用reduce处理，并把处理的结果作为下次reduce的第一个参数。如果是第一次，会把前两个元素作为计算参数，或者把用户指定的初始值作为起始参数。
+const arr = [1,20,-5,3];
+arr.reduce((a,b)=>a+b);  //结果是 19
+arr.reduce((a,b)=>a+b,10);  //结果是 29
+
+Object拓展方法:
+keys(obj)：获取对象的所有key形成的数组
+values(obj)：获取对象的所有value形成的数组
+entries(obj)：获取对象的所有key和value形成的二维数组。格式：[[k1,v1],[k2,v2],...]
+assign(dest, ...src)：将多个src对象的值 拷贝到 dest中（浅拷贝）
+比如：
+    p2={name:"jack",age:12};
+    Object.keys(p2);
+    Object.values(p2);
+    Object.entries(p2);
+    p3={sex:"f"};
+    Object.assign(p2,p3);
+
+数组拓展方法：
+find(callback)：数组实例的find方法，用于找出第一个符合条件的数组成员。
+    它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined。
+findIndex(callback)：数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。 
+includes(数组元素)：与find类似，如果匹配到元素，则返回true，代表找到了。
+    arr = [10, 20, 30];
+    arr.find(a=>a>15);  //结果为20
+    arr.findIndex(a=>a>23);  //结果为2
+    arr.includes(20);  //结果为true
