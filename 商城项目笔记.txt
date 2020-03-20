@@ -223,5 +223,16 @@ MVVM模式
 在页面中有一个input元素，通过v-model与num进行绑定。
 同时通过{{num}}在页面输出
 
-
+生命周期钩子
+每个 Vue 实例在被创建时都要经过一系列的初始化过程 ：创建实例，装载模板，渲染模板等等。Vue为生命周期中的每个状态都设置了钩子函数（监听函数）。
+每当Vue实例处于不同的生命周期时，对应的函数就会被触发调用。
+钩子函数：
+    beforeCreated：我们在用Vue时都要进行实例化，因此，该函数就是在Vue实例化时调用，也可以将他理解为初始化函数比较方便一点，在Vue1.0时，这个函数的名字就是init。 
+    created：在创建实例之后进行调用。 
+    beforeMount：页面加载完成，没有渲染。如：此时页面还是{{name}}
+    mounted：我们可以将他理解为原生js中的window.onload=function({.,.}),或许大家也在用jquery，所以也可以理解为jquery中的$(document).ready(function(){….})，他的功能就是：在dom文档渲染完毕之后将要执行的函数，该函数在Vue1.0版本中名字为compiled。 此时页面中的{{name}}已被渲染成峰哥
+    beforeDestroy：该函数将在销毁实例前进行调用 。
+    destroyed：改函数将在销毁实例时进行调用。
+    beforeUpdate：组件更新之前。
+    updated：组件更新之后。
 
