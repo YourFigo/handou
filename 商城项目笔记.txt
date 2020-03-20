@@ -186,16 +186,32 @@ MVVM模式
             <h2>{{name}}，非常帅！！！</h2>
         </div>
     </body>
-    <script src="node_modules/vue/dist/vue.js" ></script>
-    <script>
-        // 创建vue实例
-        var app = new Vue({
-            el:"#app", // el即element，该vue实例要渲染的页面元素
-            data:{ // 渲染页面需要的数据
-                name: "峰哥"
+<!--vue对象的html模板-->
+<div id="app">
+    <!--双向绑定，v-model:数据模型-->
+    <input type="text" v-model="num">
+    <!-- v-on:事件名=js表达式-->
+    <input type="button" value="点我" v-on:click="incr">
+    <!-- 花括号:js表达式-->
+    <h2>大家好，我是{{name}}，有{{num}}位妹子</h2>
+</div>
+</body>
+<script src="node_modules/vue/dist/vue.js" ></script>
+<script>
+    // 创建vue实例
+    var app = new Vue({
+        el:"#app", // el即element，该vue实例要渲染的页面元素
+        data:{ // 渲染页面需要的数据
+            name: "飞哥",
+            num: 100
+        },
+        methods:{
+            incr(){
+                this.num++;
             }
-        });
-    </script>
+        }
+    });
+</script>
 执行过程：
 首先通过 new Vue()来创建Vue实例
 然后构造函数接收一个对象，对象中有一些属性：
@@ -203,4 +219,9 @@ MVVM模式
     data：数据，数据是一个对象，里面有很多属性，都可以渲染到视图中
         name：这里我们指定了一个name属性
 页面中的h2元素中，我们通过{{name}}的方式，来渲染刚刚定义的name属性。
+我们在data添加了新的属性：num
+在页面中有一个input元素，通过v-model与num进行绑定。
+同时通过{{num}}在页面输出
+
+
 
