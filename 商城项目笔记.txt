@@ -179,6 +179,11 @@ MVVM模式
     只要我们Model发生了改变，View上自然就会表现出来。
     当用户修改了View，Model中的数据也会跟着改变。
 
+初始化vue项目：
+    进入一个项目目录，先输入：npm init -y 进行初始化
+    然后输入命令：npm install vue --save  安装Vue
+    然后就会在hello-vue目录发现一个node_modules目录，并且在下面有一个vue目录。
+
 一个简单的例子
     <!--vue对象的html模板-->
     <body>
