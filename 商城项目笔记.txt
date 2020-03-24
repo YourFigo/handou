@@ -289,3 +289,27 @@ v-on
     .ctrl  .alt  .shift
     比如alt+c 为 keyup.alt.67
 
+v-for
+    遍历数组：v-for="item in items"
+    数组下标：v-for="(item,index) in items"
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            user:{name:'峰哥', gender:'男', age: 18},
+            users:[
+                {name:'柳岩', gender:'女', age: 21},
+                {name:'峰哥', gender:'男', age: 18},
+                {name:'范冰冰', gender:'女', age: 24},
+            ],
+        }
+    })
+
+    <ul>
+        <li v-for="(user, index) in users">
+            {{index + 1}}. {{user.name}} - {{user.gender}} - {{user.age}}
+        </li>
+    </ul>
+    遍历对象：
+    <ul>
+        <li v-for="(val,key,index) in user">{{index}}.{{key}}:{{val}}</li>
+    </ul>
