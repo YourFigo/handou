@@ -257,3 +257,11 @@ MVVM模式
         v-text：将数据输出到元素内部，如果输出的数据有HTML代码，会作为普通文本输出
         v-html：将数据输出到元素内部，如果输出的数据有HTML代码，会被渲染
 
+v-model
+    刚才的v-text和v-html可以看做是单向绑定，数据影响了视图渲染，但是反过来就不行。接下来学习的v-model是双向绑定，视图（View）和模型（Model）之间会互相影响。
+    既然是双向绑定，一定是在视图中可以修改数据，这样就限定了视图的元素类型。目前v-model的可使用元素有：input、select、textarea、checkbox、radio、components
+    多个CheckBox对应一个model时，model的类型是一个数组，单个checkbox值默认是boolean类型
+    radio对应的值是input的value值
+    text 和textarea 默认对应的model是字符串
+    select单选对应字符串，多选对应也是数组
+
