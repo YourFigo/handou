@@ -265,3 +265,27 @@ v-model
     text 和textarea 默认对应的model是字符串
     select单选对应字符串，多选对应也是数组
 
+v-on
+    v-on指令用于给页面元素绑定事件。
+    v-on:事件名="js片段或函数名"
+    另外，事件绑定可以简写，例如 v-on:click='add' 可以简写为 @click='add'
+    
+    事件修饰符：
+    在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。
+    尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。
+    Vue.js 为 v-on 提供了事件修饰符
+        .stop ：阻止事件冒泡到父元素
+        .prevent：阻止默认事件发生
+        .capture：使用事件捕获模式
+        .self：只有元素自身触发事件才执行。（冒泡或捕获的都不执行）
+        .once：只执行一次
+
+    按键修饰符：
+    在监听键盘事件时，我们经常需要检查常见的键值。Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：keyup.enter 或者 keyup.13
+    .enter  .tab   .delete (捕获“删除”和“退格”键)  .esc  .space   .up  .down  .left  .right
+
+    组合按钮
+    可以用如下修饰符来实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。
+    .ctrl  .alt  .shift
+    比如alt+c 为 keyup.alt.67
+
