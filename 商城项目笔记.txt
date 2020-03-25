@@ -240,6 +240,7 @@ MVVM模式
     destroyed：改函数将在销毁实例时进行调用。
     beforeUpdate：组件更新之前。
     updated：组件更新之后。
+钩子函数不能放在实例的methods中。
 
 指令：
 指令 (Directives) 是带有 v- 前缀的特殊特性。
