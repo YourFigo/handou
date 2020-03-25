@@ -314,3 +314,31 @@ v-for
     <ul>
         <li v-for="(val,key,index) in user">{{index}}.{{key}}:{{val}}</li>
     </ul>
+
+v-if：
+    v-if，条件判断。当得到结果为true时，所在的元素才会被渲染。
+    语法： v-if="布尔表达式"
+    v-if、v-else-if、v-else的使用
+    <div id="app">
+        <input type="button" value="点我呀，生成随机数" @click="random=Math.random()">{{random}}<br>
+        <span v-if="random > 0.75">你看到我了说明我大于0.75</span>
+        <span v-else-if="random > 0.5">你看到我了说明我大于0.5</span>
+        <span v-else-if="random > 0.25">你看到我了说明我大于0.25</span>
+        <span v-else>你看到我了说明我大于0</span>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: "#app",
+            data: {
+                random:0
+            }
+        })
+    </script>
+
+v-if和v-for结合使用
+    <ul>
+        <li v-if="user.gender=='女'" v-for="(user,index) in users">{{index+1}}.{{user.name}}-{{user.gender}}-{{user.age}}</li>
+    </ul>
+
+v-show：使用和v-if基本相似，不同的是v-show的元素始终会被渲染并保留在 DOM 中。v-show 只是简单地切换元素的 CSS 属性 display,因此v-if的效率要高。
