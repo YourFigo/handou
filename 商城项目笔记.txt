@@ -346,6 +346,6 @@ v-show：使用和v-if基本相似，不同的是v-show的元素始终会被渲�
 v-bind：
     html属性不能使用双大括号形式绑定，只能使用v-bind指令。
     在将 v-bind 用于 class 和 style 时，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。
-    给按钮的value属性赋值不能使用{{}}，使用v-bind绑定数据模型中的
-    value:0
+绑定属性值：
+    给按钮的value属性赋值不能使用{{}}，使用v-bind绑定数据模型中的 value:0
     <input type="button" v-bind:value="value" @click="random=Math.random()">{{random}}<br>
