@@ -363,3 +363,26 @@ v-bind：
 简写：
     v-bind:class 可以简写为 :class
     比如： <input type="button" :class="{active: store > 0}" value="加入购物车">
+	
+计算属性：
+计算属性本质就是方法，但是一定要返回数据。然后页面渲染时，可以把这个方法当成一个变量来使用。
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            birthday:1429032123201 // 毫秒值
+        },
+        computed:{
+            birth(){// 计算属性本质是一个方法，但是必须返回结果
+                const d = new Date(this.birthday);
+                return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDay();
+            }
+        }
+    })
+在使用时，计算属性的调用不能加函数调用时的()：
+    <div id="app">
+        <h1>您的生日是：{{birth}} </h1>
+    </div>
+相比于函数，计算属性的效率更高：
+我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。
+然而，不同的是 计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。
+这就意味着只要birthday还没有发生改变，多次访问 birthday 计算属性会立即返回之前的计算结果，而不必再次执行函数。 
