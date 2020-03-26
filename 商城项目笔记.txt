@@ -386,3 +386,22 @@ v-bind：
 我们可以将同一函数定义为一个方法而不是一个计算属性。两种方式的最终结果确实是完全相同的。
 然而，不同的是 计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。
 这就意味着只要birthday还没有发生改变，多次访问 birthday 计算属性会立即返回之前的计算结果，而不必再次执行函数。 
+
+watch监听：
+watch可以让我们监控一个值的变化。从而做出相应的反应。
+比如有一个输入框：
+    <div id="app">
+        <input type="text" v-model="message">
+    </div>
+使用watch进行监听，可以在watch中监听到值得变化后传给后台接口进行处理
+    vm = new Vue({
+        el:"#app",
+        data:{
+            message:""
+        },
+        watch:{
+            message(newVal, oldVal){
+                console.log(newVal, oldVal);
+            }
+        }
+    })
