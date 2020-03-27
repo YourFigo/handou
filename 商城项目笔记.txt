@@ -545,45 +545,7 @@ vue提供了一个内置的this.$emit()函数，用来调用父组件绑定的�
 使用vue-router和vue可以非常方便的实现 复杂单页应用的动态路由功能。比如，当点击登录或注册按钮，分别显示登录页或注册页，而不是一起显示。
 在项目目录下通过npm安装vue-router:
     npm install vue-router --save
-在index.html中定义Vue和VueRouter，并引用login和register页的js
-    <body>
-        <div id="app">
-            <span><router-link to="/login">登录</router-link></span>
-            <span><router-link to="/register">注册</router-link></span>
-            <hr/>
-            <router-view></router-view>
-        </div>
-    </body>
-    <script src="../node_modules/vue/dist/vue.js"></script>
-    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/register.js"></script>
-    <script>
-
-        const router = new VueRouter({
-            routes:[
-                {
-                    // 路由路径必须以"/"开头
-                    path:"/login",
-                    component:loginForm
-                },
-                {
-                    path: "/register",
-                    component: registerForm
-                }
-            ]
-        })
-
-        const app =  new Vue({
-            el:"#app",
-            components:{
-                loginForm,
-                registerForm
-            },
-            router
-        })
-    </script>
-分别在login.html和register.html中定义loginForm和registerForm
+1、分别在login.html和register.html中定义loginForm和registerForm
     const loginForm = {
         // template 中只能有一个根标签，不能有其他平行标签
         template:`
@@ -607,3 +569,42 @@ vue提供了一个内置的this.$emit()函数，用来调用父组件绑定的�
         </div>
         `
     }
+2、引用相关js
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/register.js"></script>
+3、创建VueRouter对象，并指定路由参数
+routes：路由规则的数组，可以指定多个对象，每个对象是一条路由规则，包含以下属性：path：路由的路径，component：组件名称
+    const router = new VueRouter({
+        routes:[
+            {
+                // 路由路径必须以"/"开头
+                path:"/login",
+                component:loginForm
+            },
+            {
+                path: "/register",
+                component: registerForm
+            }
+        ]
+    })
+4、在父组件中引入router对象
+    const app =  new Vue({
+        el:"#app",
+        components:{
+            loginForm,
+            registerForm
+        },
+        router
+    })
+5、在index.html中定义Vue和VueRouter，并引用login和register页的js，通过<router-view>来指定一个锚点，当路由的路径匹配时，vue-router会自动把对应组件放到锚点位置进行渲染，
+通过<router-link>指定一个跳转链接，当点击时，会触发vue-router的路由功能，路径中的hash值会随之改变
+    <body>
+        <div id="app">
+            <span><router-link to="/login">登录</router-link></span>
+            <span><router-link to="/register">注册</router-link></span>
+            <hr/>
+            <router-view></router-view>
+        </div>
+    </body>
