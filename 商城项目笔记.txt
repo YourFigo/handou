@@ -467,3 +467,75 @@ const app = new Vue({
     <hello1></hello1>
 </div>
 效果与刚才的全局注册是类似的，不同的是，这个hello组件只能在当前的Vue实例中使用，在没有注册的Vue实例中是不能使用的。
+
+组件通信：
+props（父向子传递）：
+    1. 父组件使用子组件时，在子组件标签中自定义属性（属性名任意，属性值为要传递的数据）
+    2. 子组件通过props接收父组件数据，通过自定义属性的属性名
+比如：
+    <div id="app">
+        <!--使用子组件，同时传递num1属性-->
+        <counter :num1="num"/>
+    </div>
+然后在子组件中接收父组件传递来的数据
+    Vue.component("counter",{
+        // 直接使用props接收到的属性来渲染页面
+        template:"<button @click='num1++'>点我{{num1}}</button>",
+        // 通过props来接收一个父组件传递的属性
+        props:['num1']
+    })
+
+    const app = new Vue({
+        el:"#app",
+        data:{
+            num:5
+        }
+    })
+通过上面的操作，点击只能实现子组件中的数据加一操作，父组件中的数据没有加一，因为子组直接不能操作父组件的数据
+在porps中也可以进行一些简单的数据验证：
+    props:{
+            num1:{
+                type:Number
+            }
+        }
+动态静态绑定：
+    :num1 和 num1 的区别
+    :num1="num" 实质上是 v-bind:num1="num"，认为接收到的是js脚本，因此可以获取到数据模型里的数据
+    num1="0" 接收到的就是一个字符串"0"
+
+子向父的通信：$emit
+vue提供了一个内置的this.$emit()函数，用来调用父组件绑定的函数
+子组件虽然不能直接操作父组件中的数据，但可以通过操作父组件中的方法来间接操作父组件中的数据
+在父组件中定义方法来操作num的增加：
+    const app = new Vue({
+        el:"#app",
+        data:{
+            num:0
+        },
+        methods:{ // 父组件中定义操作num的方法
+            increment(){
+                this.num++;
+            }
+        }
+    })
+在视图中使用父组件，同时向子组件传递数据和方法：
+    <div id="app">
+        <!--使用子组件，同时传递num1属性和方法increment  自定义num1和incr-->
+        <counter :num1="num" @incr="increment()"></counter>
+    </div>
+在子组件中接收数据和方法，并在子组件的方法中，通过$emit()来操作父组件中的方法
+    Vue.component("counter",{
+        // 直接使用props接收到的属性来渲染页面
+        template:"<button @click='subIncr'>点我{{num1}}</button>",
+        // 通过props来接收一个父组件传递的属性
+        props:{
+            num1:{
+                type:Number
+            }
+        },
+        methods:{
+            subIncr(){
+                this.$emit("incr");
+            }
+        }
+    })
