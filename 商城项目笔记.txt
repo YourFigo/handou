@@ -94,3 +94,54 @@ main.js中使用了App组件，即App.vue，也就是说index.html中最终展�
 访问流程：用户在浏览器输入路径，例如：http://localhost:9001/#/item/brand --> index.js(/item/brand路径对应pages/item/Brand.vue组件)
 --> 该组件显示在App.vue的锚点位置 --> main.js使用了App.vue组件，并把该组件渲染在index.html文件中（id为“app”的div中）
 
+Vuetify框架：
+Vuetify基于Material Design（谷歌推出的多平台设计规范），几乎不需要任何CSS代码，拿来就可以用这里的UI组件
+
+SwitchHosts!工具：
+修改本地host文件的工具，可以伪造本地的hosts文件，实现对域名的解析。
+在webpack.dev.conf.js中取消host验证：disableHostCheck: true，就可以使用域名代替localhost或者127.0.0.1进行访问了。
+
+
+Nginx：反向代理服务器
+域名问题解决了，但是现在要访问后台页面，还得自己加上端口：http://manage.handou.com:9001/，
+我们希望的是直接通过域名访问，而不加端口号：http://manage.handou.com。但是不加端口号默认是80端口，如何才能把请求转移到9001端口呢？
+可以使用web服务器Nginx。web服务器和web应用服务器的区别：
+web应用服务器，如：
+    tomcat
+    resin
+    jetty
+web服务器，如：
+    Apache 服务器
+    Nginx
+    IIS
+区分：web服务器不能解析jsp等页面，只能处理js、css、html等静态资源。
+并发：web服务器的并发能力远高于web应用服务器。
+
+代理和反向代理：正向代理代理的对象时客户端，反向代理代理的对象时服务端。
+代理：我们常说的代理就是正向代理，它隐藏了真实请求的客户端，客户端请求的服务都被代理服务器代替来请求，服务器端并不知道真实的客户端。
+反向代理：反向代理隐藏了真正的服务端，当我们请求www.baidu.com时，百度可能有成千上万台服务器，具体哪一台正在为我们服务，我们无需知道，我们只需要知道反向代理服务器就可以了。
+
+nginx可以当做反向代理服务器来使用：
+    我们需要提前在nginx中配置好反向代理的规则，不同的请求，交给不同的真实服务器处理
+    当请求到达nginx，nginx会根据已经定义的规则进行请求的转发，从而实现路由功能
+
+nginx中的目录：
+    1. conf：配置目录
+    2. contrib：第三方依赖
+    3. html：默认的静态资源目录，类似于tomcat的webapps
+    4. logs：日志目录
+    5. nginx.exe：启动程序。可双击运行，但不建议这么做。
+
+启动nigin：start nginx
+重新加载：nginx -s reload
+停止：nginx -s stop
+
+修改conf\nginx.conf中的配置：
+server_name  改为 ：manage.handou.com
+这样就可以在浏览器不输入端口号，直接使用域名就可以访问了，处理流程如下：
+    1. 浏览器准备发起请求，访问http://mamage.handou.com，但需要进行域名解析
+    2. 优先进行本地域名解析，因为我们修改了hosts，所以解析成功，得到地址：127.0.0.1
+    3. 请求被发往解析得到的ip，并且默认使用80端口：http://127.0.0.1:80，本机的nginx一直监听80端口，因此捕获这个请求
+    4. nginx中配置了反向代理规则，将manage.handou.com代理到127.0.0.1:9001，因此请求被转发（nginx中有配置：proxy_pass http://127.0.0.1:9001;）
+    5. 后台系统的webpack server监听的端口是9001，得到请求并处理，完成后将响应返回到nginx
+    6. nginx将得到的结果返回到浏览器
