@@ -16,6 +16,7 @@ handou-manage-web
 │  │  ├─trade
 │  │  └─user
 │  ├─router
+│  │  └─index.js
 │  ├─App.vue
 │  ├─config.js
 │  ├─http.js
