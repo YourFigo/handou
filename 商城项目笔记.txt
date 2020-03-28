@@ -162,3 +162,4 @@ server_name  改为 ：manage.handou.com
     5. 后台系统的webpack server监听的端口是9001，得到请求并处理，完成后将响应返回到nginx
     6. nginx将得到的结果返回到浏览器
 
+编写分类管理相关功能：/item/category
