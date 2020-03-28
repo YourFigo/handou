@@ -1,23 +1,26 @@
-¾í Data µÄÎÄ¼þ¼Ð PATH ÁÐ±í
-¾íÐòÁÐºÅÎª 4296-FF05
-D:.
-©À©¤build
-©À©¤config
-©À©¤dist
-©À©¤node_modules
-©À©¤src
-©¦  ©À©¤assets
-©¦  ©À©¤components
-©¦  ©¦  ©À©¤cascader
-©¦  ©¦  ©À©¤form
-©¦  ©¦  ©À©¤messages
-©¦  ©¦  ©¸©¤tree
-©¦  ©À©¤pages
-©¦  ©¦  ©À©¤item
-©¦  ©¦  ©¦  ©¸©¤specification
-©¦  ©¦  ©À©¤trade
-©¦  ©¦  ©¸©¤user
-©¦  ©¸©¤router
-©À©¤static
-©À©¤index.html
-©¸©¤package.json
+handou-manage-web
+â”œâ”€build
+â”œâ”€config
+â”œâ”€dist
+â”œâ”€node_modules
+â”œâ”€src
+â”‚  â”œâ”€assets
+â”‚  â”œâ”€components
+â”‚  â”‚  â”œâ”€cascader
+â”‚  â”‚  â”œâ”€form
+â”‚  â”‚  â”œâ”€messages
+â”‚  â”‚  â””â”€tree
+â”‚  â”œâ”€pages
+â”‚  â”‚  â”œâ”€item
+â”‚  â”‚  â”‚  â””â”€specification
+â”‚  â”‚  â”œâ”€trade
+â”‚  â”‚  â””â”€user
+â”‚  â”œâ”€router
+â”‚  â”œâ”€App.vue
+â”‚  â”œâ”€config.js
+â”‚  â”œâ”€http.js
+â”‚  â”œâ”€main.js
+â”‚  â””â”€mune.js
+â”œâ”€static
+â”œâ”€index.html
+â””â”€package.json

@@ -28,7 +28,8 @@ PV、QPS、并发
     根据二八原则，80%的请求集中在20%的时间来计算峰值压力：
     （每日PV * 80%） / （3600s * 24 * 20%） * 每个页面的请求数  = 每个页面每秒的请求数量
     然后除以服务器的QPS值，即可计算得出需要部署的服务器数量
-	
+
+
 环境：
 jdk 1.8
 maven 3.5
@@ -45,4 +46,38 @@ handou-item：商品聚合模块
     handou-item-interface：负责商品模块对外接口的子模块
     handou-item-service：负责商品模块对内业务的子模块
 handou-common：通用工具类模块
+handou-manage-web：商城后台管理平台的前端Vue页面
 
+导入 handou-manage-web 项目
+package.json中定义了我们所需的一切依赖，安装依赖需要在控制台运行命令：
+    npm install
+安装好依赖后，可以在package.json中启动项目，运行：
+    npm run dev
+
+看一下目录结构：
+handou-manage-web
+├─build
+├─config
+├─dist
+├─node_modules
+├─src
+│  ├─assets
+│  ├─components
+│  │  ├─cascader
+│  │  ├─form
+│  │  ├─messages
+│  │  └─tree
+│  ├─pages
+│  │  ├─item
+│  │  │  └─specification
+│  │  ├─trade
+│  │  └─user
+│  ├─router
+│  ├─App.vue
+│  ├─config.js
+│  ├─http.js
+│  ├─main.js
+│  └─mune.js
+├─static
+├─index.html
+└─package.json
