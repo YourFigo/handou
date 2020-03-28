@@ -1,0 +1,23 @@
+卷 Data 的文件夹 PATH 列表
+卷序列号为 4296-FF05
+D:.
+├─build
+├─config
+├─dist
+├─node_modules
+├─src
+│  ├─assets
+│  ├─components
+│  │  ├─cascader
+│  │  ├─form
+│  │  ├─messages
+│  │  └─tree
+│  ├─pages
+│  │  ├─item
+│  │  │  └─specification
+│  │  ├─trade
+│  │  └─user
+│  └─router
+├─static
+├─index.html
+└─package.json
