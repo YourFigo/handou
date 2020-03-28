@@ -78,10 +78,26 @@ handou-manage-web
 │  ├─config.js
 │  ├─http.js
 │  ├─main.js
-│  └─mune.js
+│  └─menu.js
 ├─static
 ├─index.html
 └─package.json
+
+build：各种编译用的配置文件，package.json中的scripts里面有调用
+config：webpack配置文件（webpack：是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)。并且提供了前端项目的热部署插件。）
+dist：打包输出目录
+node_modules：下载的依赖
+src/assets：一些图片资源
+src/components：一些自定义组件，扩展vuetify中没有的内容
+src/pages：具体页面或页面中的组件
+src/router/index.js：整个项目的路由跳转配置
+src/App.Vue：根vue组件，其他组件在它内部渲染
+src/config.js：全局的一些配置信息
+src/http.js：ajax请求的相关配置
+src/main.js：项目入口文件
+src/menu.js：页面菜单中的假数据，后面按需修改
+index.html：单页应用唯一的html
+package.json：整个vue项目的依赖
 
 理一下清index.html、main.js、App.vue和index.js之间的关系：
     index.html：html模板文件。定义了空的div，其id为app。
