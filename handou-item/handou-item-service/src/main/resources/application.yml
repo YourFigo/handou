@@ -15,4 +15,4 @@ eureka:
     lease-renewal-interval-in-seconds: 5  #心跳
     lease-expiration-duration-in-seconds: 15  #过期时间
 mybatis:
-  type-aliases-package: cn.handou.item.pojo
+  type-aliases-package: com.handou.item.pojo

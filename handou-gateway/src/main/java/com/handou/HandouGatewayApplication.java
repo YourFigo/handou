@@ -1,17 +1,19 @@
-package cn.handou;
+package com.handou;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 /**
  * @Author Figo
- * @Date 2020/3/16 17:46
+ * @Date 2020/3/16 12:06
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class HandouItemApplication {
+@EnableZuulProxy
+public class HandouGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(HandouItemApplication.class);
+        SpringApplication.run(HandouGatewayApplication.class);
     }
 }
