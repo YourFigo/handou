@@ -162,6 +162,7 @@ server_name  改为 ：manage.handou.com
     5. 后台系统的webpack server监听的端口是9001，得到请求并处理，完成后将响应返回到nginx
     6. nginx将得到的结果返回到浏览器
 
+
 编写分类管理相关功能：/item/category
 查询分类信息的访问路径：
     http://localhost:8081/category/list?pid=0
@@ -173,9 +174,9 @@ server_name  改为 ：manage.handou.com
 Access to XMLHttpRequest at 'http://api.handou.com/api/item/category/list?pid=0' from origin 'http://manage.handou.com:9001'
 has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 跨域：浏览器对于javascript的同源策略的限制。下面几种情况都属于跨域：
-    1、域名不同www.jd.com 与 www.taobao.com域名相同，
-    2、端口不同www.jd.com:8080 与 www.jd.com:8081
-    3、二级域名不同item.jd.com 与 miaosha.jd.com
+    1、域名不同  www.jd.com 与 www.taobao.com
+    2、端口不同  www.jd.com:8080 与 www.jd.com:8081
+    3、二级域名不同 item.jd.com 与 miaosha.jd.com
     4、http和https也属于跨域
 如果域名和端口都相同，但是请求路径不同，不属于跨域，如：
     www.jd.com/item
@@ -226,27 +227,27 @@ CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持�
 当浏览器发现发起的ajax请求是简单请求时，会在请求头中携带一个字段：Origin: http://manage.handou.com:9001
 Origin中会指出当前请求属于哪个域（协议+域名+端口）。服务会根据这个值决定是否允许其跨域。
 如果服务器允许跨域，需要在返回的响应头中携带下面信息：
-    Access-Control-Allow-Origin: http://manage.leyou.com
+    Access-Control-Allow-Origin: http://manage.handou.com
     Access-Control-Allow-Credentials: true
     Content-Type: text/html; charset=utf-8
-Access-Control-Allow-Origin：可接受的域，是一个具体域名或者*（代表任意域名）
+Access-Control-Allow-Origin：允许哪个域名进行跨域，是一个具体域名或者*（代表任意域名）
 Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，cors不会携带cookie，除非这个值是true
 要想操作cookie，需要满足3个条件：
     服务的响应头中需要携带Access-Control-Allow-Credentials并且为true。
     浏览器发起ajax需要指定withCredentials 为true
     响应头中的Access-Control-Allow-Origin一定不能为*，必须是指定的域名
 特殊请求：
-不符合简单请求的条件，会被浏览器判定为特殊请求,，例如请求方式为PUT。
+不符合简单请求的条件，会被浏览器判定为特殊请求,例如请求方式为PUT。
 预检请求：
 特殊请求会在正式通信之前，增加一次HTTP查询请求，称为"预检"请求(preflight)。
 浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。
 只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。
 一个“预检”请求的样板：
     OPTIONS /cors HTTP/1.1
-    Origin: http://manage.leyou.com
+    Origin: http://manage.handou.com
     Access-Control-Request-Method: PUT
     Access-Control-Request-Headers: X-Custom-Header
-    Host: api.leyou.com
+    Host: api.handou.com
     Accept-Language: en-US
     Connection: keep-alive
     User-Agent: Mozilla/5.0...
@@ -258,7 +259,7 @@ Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，
     HTTP/1.1 200 OK
     Date: Mon, 01 Dec 2008 01:15:39 GMT
     Server: Apache/2.0.61 (Unix)
-    Access-Control-Allow-Origin: http://manage.leyou.com
+    Access-Control-Allow-Origin: http://manage.handou.com
     Access-Control-Allow-Credentials: true
     Access-Control-Allow-Methods: GET, POST, PUT
     Access-Control-Allow-Headers: X-Custom-Header
@@ -274,3 +275,7 @@ Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，
     Access-Control-Allow-Headers：允许携带的头
     Access-Control-Max-Age：本次许可的有效时长，单位是秒，过期之前的ajax请求就无需再次进行预检了
 如果浏览器得到上述响应，则认定为可以跨域，后续就跟简单请求的处理是一样的了。
+
+实现跨域访问：在网关（zuul）中编写一个配置类，并且注册CorsFilter：
+SpringMVC已经帮我们写好了CORS的跨域过滤器：CorsFilter ,内部已经实现了刚才所讲的判定逻辑，我们直接用就好了。
+服务端可以通过拦截器统一实现，不必每次都去进行跨域判定的编写。
