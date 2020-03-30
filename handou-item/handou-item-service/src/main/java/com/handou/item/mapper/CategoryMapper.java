@@ -1,4 +1,4 @@
-package com.handou.mapper;
+package com.handou.item.mapper;
 
 import com.handou.item.pojo.Category;
 import tk.mybatis.mapper.common.Mapper;
