@@ -279,3 +279,4 @@ Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，
 实现跨域访问：在网关（zuul）中编写一个配置类，并且注册CorsFilter：
 SpringMVC已经帮我们写好了CORS的跨域过滤器：CorsFilter ,内部已经实现了刚才所讲的判定逻辑，我们直接用就好了。
 服务端可以通过拦截器统一实现，不必每次都去进行跨域判定的编写。
+在网关中创建一个CorsFilter的跨域访问过滤器类：HandouCorsConfiguration
