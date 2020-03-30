@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/handou-common/handou-common.iml" filepath="$PROJECT_DIR$/handou-common/handou-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/handou-manage-web/handou-manage-web.iml" filepath="$PROJECT_DIR$/handou-manage-web/handou-manage-web.iml" />
     </modules>
   </component>

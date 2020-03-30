@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="handou-common" />
         <module name="handou-gateway" />
         <module name="handou-item-service" />
         <module name="handou-registry" />
@@ -16,6 +17,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="handou" options="-parameters" />
+      <module name="handou-common" options="-parameters" />
       <module name="handou-gateway" options="-parameters" />
       <module name="handou-item-interface" options="-parameters" />
       <module name="handou-item-service" options="-parameters" />

@@ -16,4 +16,11 @@
     <name>handou-item-interface</name>
     <description>商品微服务中对外暴露的接口及相关实体类</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>
