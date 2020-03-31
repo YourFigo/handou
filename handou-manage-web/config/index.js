@@ -13,7 +13,8 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: 'manage.handou.com', // can be overwritten by process.env.HOST
+    // host: '127.0.0.1', // can be overwritten by process.env.HOST
+    host: 'manage.handou.com',
     port: 9001, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
