@@ -40,7 +40,7 @@ public class BrandController {
             @RequestParam(value = "desc", required = false)Boolean desc
     ){
         PageResult<Brand> result = this.brandService.queryBrandByPage(key,page,rows,sortBy,desc);
-        if (result == null || CollectionUtils.isEmpty(result.getItems())){
+        if (CollectionUtils.isEmpty(result.getItems())){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(result);
