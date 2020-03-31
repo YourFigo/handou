@@ -280,3 +280,55 @@ Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，
 SpringMVC已经帮我们写好了CORS的跨域过滤器：CorsFilter ,内部已经实现了刚才所讲的判定逻辑，我们直接用就好了。
 服务端可以通过拦截器统一实现，不必每次都去进行跨域判定的编写。
 在网关中创建一个CorsFilter的跨域访问过滤器类：HandouCorsConfiguration
+
+前端异步查询工具axios
+异步查询数据，自然是通过ajax查询，大家首先想起的肯定是jQuery。但jQuery与MVVM的思想不吻合，而且ajax只是jQuery的一小部分。
+因此不可能为了发起ajax请求而去引用这么大的一个库。Vue官方推荐的ajax请求框架叫做：axios
+axios的Get请求语法：
+    axios.get("/item/category/list?pid=0") // 请求路径和请求参数拼接
+        .then(function(resp){
+            // 成功回调函数
+        })
+        .catch(function(){
+            // 失败回调函数
+        })
+    // 参数较多时，可以通过params来传递参数
+    axios.get("/item/category/list", {
+            params:{
+                pid:0
+            }
+        })
+        .then(function(resp){})// 成功时的回调
+        .catch(function(error){})// 失败时的回调
+
+axios的POST请求语法：
+比如新增一个用户
+    axios.post("/user",{
+            name:"Jack",
+            age:21
+        })
+        .then(function(resp){})
+        .catch(function(error){})
+注意，POST请求传参，不需要像GET请求那样定义一个对象，在对象的params参数中传参。post()方法的第二个参数对象，就是将来要传递的参数
+PUT和DELETE请求与POST请求类似
+我们这里的使用是在：
+    getDataFromServer() { // 从服务的加载数的方法。
+        // 发起请求
+        this.$http.get("/item/brand/page", {
+          params: {
+            key: this.search, // 搜索条件
+            page: this.pagination.page,// 当前页
+            rows: this.pagination.rowsPerPage,// 每页大小
+            sortBy: this.pagination.sortBy,// 排序字段
+            desc: this.pagination.descending// 是否降序
+          }
+        }).then(resp => { // 这里使用箭头函数
+          this.brands = resp.data.items;
+          this.totalBrands = resp.data.total;
+          // 完成赋值后，把加载状态赋值为false
+          this.loading = false;
+        })
+      }
+我们这里没有使用axios而是使用了this.$http，因为我们在src/http.js中做了封装：
+    // 将axios添加到 Vue的原型，这样一切vue实例都可以使用该对象
+    Vue.prototype.$http = axios;
