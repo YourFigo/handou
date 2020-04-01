@@ -332,3 +332,14 @@ PUT和DELETE请求与POST请求类似
 我们这里没有使用axios而是使用了this.$http，因为我们在src/http.js中做了封装：
     // 将axios添加到 Vue的原型，这样一切vue实例都可以使用该对象
     Vue.prototype.$http = axios;
+
+
+json对象转换为查询字符串
+请求的数据格式是一个JSON对象，在controller中只能使用一个对象接收，不能使用两个参数接收，否则报400错误。
+axios处理请求体的原则会根据请求数据的格式来定：
+    如果请求体是对象：会转为json发送
+    如果请求体是String：会作为普通表单请求发送，但需要我们自己保证String的格式是键值对。如：name=jack&age=12
+可以使用QS工具，在前端将json数据转换为请求参数字符串
+    QS是一个第三方库，我们可以用 npm install qs --save 来安装。
+    QS，即Query String，请求参数字符串。例如： name=jack&age=21
+    QS工具可以便捷的实现 JS的Object与QueryString的转换。
