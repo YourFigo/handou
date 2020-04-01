@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="handou-registry" />
         <module name="handou-gateway" />
         <module name="handou-common" />
+        <module name="handou-registry" />
         <module name="handou-item-service" />
         <module name="handou-item-interface" />
       </profile>
