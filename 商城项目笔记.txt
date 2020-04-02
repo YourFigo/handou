@@ -343,4 +343,6 @@ axios处理请求体的原则会根据请求数据的格式来定：
     QS是一个第三方库，我们可以用 npm install qs --save 来安装。
     QS，即Query String，请求参数字符串。例如： name=jack&age=21
     QS工具可以便捷的实现 JS的Object与QueryString的转换。
-    data: this.$qs.stringify(params)
+    stringify()方法可以将json对象转换为查询字符串
+    比如   data: this.$qs.stringify(params)
+    parse()方法可以将查询字符串转换为json对象
