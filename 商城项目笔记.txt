@@ -493,18 +493,18 @@ vim /etc/fdfs/tracker.conf
 mkdir -p /handou/tracker
 service fdfs_trackerd start
 chkconfig fdfs_trackerd on
-ps -ef | grep fdfs_trackerd
+ps -ef | grep fdfs
 
 编辑storage配置并启动
 cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
 vim /etc/fdfs/storage.conf
     base_path=/leyou/storage
     store_path0=/leyou/storage
-    tracker_server=172.21.0.15:22122
+    tracker_server=192.144.163.25:22122
 mkdir -p /handou/storage
 service fdfs_storaged start
 chkconfig fdfs_storaged on
-ps -ef | grep fdfs_trackerd
+ps -ef | grep fdfs
 
 安装fastdfs-nginx-module
 tar -zxvf fastdfs-nginx-module_v1.16.tar.gz
@@ -514,9 +514,9 @@ vim config
 
 配置nginx与FastDFS关联配置文件
 cp /usr/local/handou/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/
-vi /etc/fdfs/mod_fastdfs.conf
+vim /etc/fdfs/mod_fastdfs.conf
     connect_timeout=20
-    tracker_server=172.21.0.15:22122
+    tracker_server=192.144.163.25:22122
     url_have_group_name=true
     store_path0=/handou/storage
 
@@ -695,3 +695,7 @@ chmod 777 /etc/init.d/nginx
 chkconfig --add /etc/init.d/nginx
 设置开机启动
 chkconfig nginx on
+
+
+FastDFS开源的java客户端
+https://github.com/tobato/FastDFS_Client
