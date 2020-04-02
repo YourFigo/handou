@@ -46,7 +46,20 @@ handou-item：商品聚合模块
     handou-item-interface：负责商品模块对外接口的子模块
     handou-item-service：负责商品模块对内业务的子模块
 handou-common：通用工具类模块
+handou-upload：整个项目的文件上传服务
 handou-manage-web：商城后台管理平台的前端Vue页面
+
+域名和端口：
+网站访问：manage.handou.com
+api调用：api.handou.com/api
+图片上传：image.handou.com
+访问和调用都是80端口，由nginx监听并反向代理
+zuul：10010
+eureka：10086
+item：8081
+upload：8082
+前端webpack：9001
+
 
 导入 handou-manage-web 项目
 package.json中定义了我们所需的一切依赖，安装依赖需要在控制台运行命令：
@@ -281,6 +294,7 @@ SpringMVC已经帮我们写好了CORS的跨域过滤器：CorsFilter ,内部已�
 服务端可以通过拦截器统一实现，不必每次都去进行跨域判定的编写。
 在网关中创建一个CorsFilter的跨域访问过滤器类：HandouCorsConfiguration
 
+
 前端异步查询工具axios
 异步查询数据，自然是通过ajax查询，大家首先想起的肯定是jQuery。但jQuery与MVVM的思想不吻合，而且ajax只是jQuery的一小部分。
 因此不可能为了发起ajax请求而去引用这么大的一个库。Vue官方推荐的ajax请求框架叫做：axios
@@ -343,6 +357,62 @@ axios处理请求体的原则会根据请求数据的格式来定：
     QS是一个第三方库，我们可以用 npm install qs --save 来安装。
     QS，即Query String，请求参数字符串。例如： name=jack&age=21
     QS工具可以便捷的实现 JS的Object与QueryString的转换。
-    stringify()方法可以将json对象转换为查询字符串
-    比如   data: this.$qs.stringify(params)
+    data: this.$qs.stringify(params)
     parse()方法可以将查询字符串转换为json对象
+
+
+图片等大文件传输绕过网关
+图片上传是文件的传输，如果也经过Zuul网关的代理，文件就会经过多次网路传输，造成不必要的网络负担。
+在高并发时，可能导致网络阻塞，Zuul网关不可用。这样我们的整个系统就瘫痪了。所以，我们上传文件的请求就不经过网关来处理了。
+1、Zuul的路由过滤：
+Zuul中提供了一个 ignored-patterns 属性，用来忽略不希望路由的URL路径，示例：
+    zuul.ignored-patterns: /upload/**
+路径过滤会对一切微服务进行判定。
+Zuul还提供了 ignored-services 属性，进行服务过滤：
+    zuul.ignored-services: upload-servie
+我们这里采用忽略服务：
+    zuul:
+    ignored-services:
+        - upload-service # 忽略upload-service服务
+上面的配置采用了集合语法，代表可以配置多个。
+2、上面的配置还是经过了网关，不是理想效果，我们希望是绕过网关：
+修改nginx反向代理的配置文件：
+    server {
+        listen       80;
+        server_name  api.handou.com;
+
+        proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Server $host;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+		location /api/upload {
+			proxy_pass http://127.0.0.1:8082;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+
+			rewrite "^/api/(.*)$" /$1 break;
+		}
+
+		location / {
+			proxy_pass http://127.0.0.1:10010;
+			proxy_connect_timeout 600;
+			proxy_read_timeout 600;
+		}
+    }
+图片上传的api请求路径为：http://api.handou.com/api/upload/image
+我们修改nginx配置文件，希望后缀是/api/upload/* 的所有请求直接转发到图片服务器的8082端口，而不转到网关的10010端口。
+但这样转发后的路径变为了：http://localhost:8082/api/upload/image 而我们服务器配置的路径为 http://localhost:8082/upload/image
+多了一个 /api 这需要nginx的rewrite指令来对地址进行重写：
+语法格式：
+    rewrite "用来匹配路径的正则" 重写后的路径 [指令];
+我们这里是：
+    rewrite "^/api/(.*)$" /$1 break;
+路径重写：
+    "^/api/(.*)$"：匹配路径的正则表达式，用了分组语法，把/api/以后的所有部分当做1组
+    /$1：重写的目标路径，这里用$1引用前面正则表达式匹配到的分组（组编号从1开始），即/api/后面的所有。这样新的路径就是除去/api/以外的所有，就达到了去除/api 前缀的目的
+break：指令，常用的有2个，分别是：last、break
+    last：重写路径结束后，将得到的路径重新进行一次路径匹配
+    break：重写路径结束后，不再重新匹配路径。
+    我们这里不能选择last，否则以新的路径/upload/image来匹配，就不会被正确的匹配到8082端口了
+重启nginx后，还是不能正常访问，因为从 http://manage.handou.com/#/item/brand 到 http://api.handou.com/api/upload/image 存在跨域问题，
+需要在handou-upload项目中新增 HandouCorsConfiguration 跨域访问配置类。
