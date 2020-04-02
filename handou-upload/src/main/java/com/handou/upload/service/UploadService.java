@@ -1,7 +1,11 @@
 package com.handou.upload.service;
 
+import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +27,9 @@ public class UploadService {
             "image/bmp", "image/webp", "image/x-icon", "image/vnd.microsoft.icon");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadService.class);
+
+    @Autowired
+    private FastFileStorageClient storageClient;
 
     /**
      * 图片上传的业务逻辑
@@ -49,11 +56,15 @@ public class UploadService {
 
             // 保存到文件服务器
             // D:\\1_Code\\java\\handou\\handou-upload\\upload\\image
-            String directory = new File("").getAbsolutePath() + "\\handou-upload\\upload\\image\\";
-            file.transferTo(new File(directory + originalFilename));
+//            String directory = new File("").getAbsolutePath() + "\\handou-upload\\upload\\image\\";
+//            file.transferTo(new File(directory + originalFilename));
+            String ext = StringUtils.substringAfterLast(originalFilename, ".");
+            StorePath storePath = this.storageClient.uploadFile(file.getInputStream(), file.getSize(), ext, null);
 
             // 返回url，进行回写
-            return "http://image.handou.com/" + originalFilename;
+//            return "http://image.handou.com/" + originalFilename;
+            return "http://image.handou.com/" + storePath.getFullPath();
+
         } catch (IOException e) {
             LOGGER.info("服务器内部错误：{}", originalFilename);
             e.printStackTrace();
