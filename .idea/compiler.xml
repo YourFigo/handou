@@ -7,10 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="handou-gateway" />
-        <module name="handou-common" />
         <module name="handou-registry" />
         <module name="handou-item-service" />
+        <module name="handou-common" />
         <module name="handou-item-interface" />
+        <module name="handou-upload" />
       </profile>
     </annotationProcessing>
   </component>
@@ -22,6 +23,7 @@
       <module name="handou-item-interface" options="-parameters" />
       <module name="handou-item-service" options="-parameters" />
       <module name="handou-registry" options="-parameters" />
+      <module name="handou-upload" options="-parameters" />
     </option>
   </component>
 </project>
