@@ -1,4 +1,4 @@
-package com.handou.test;
+package com.handou.upload.test;
 
 import org.junit.Test;
 
