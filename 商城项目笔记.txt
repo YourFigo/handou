@@ -696,6 +696,28 @@ chkconfig --add /etc/init.d/nginx
 设置开机启动
 chkconfig nginx on
 
+修改本地host文件为对应的图片服务器ip
+
 
 FastDFS开源的java客户端
 https://github.com/tobato/FastDFS_Client
+一个开源的FastDFS客户端，支持最新的SpringBoot2.0
+配置使用极为简单，支持连接池，支持自动生成缩略图
+
+
+windows开机自启nginx
+下载：http://repo.jenkins-ci.org/releases/com/sun/winsw/winsw/1.18/winsw-1.18-bin.exe
+将其放在 Nginx安装目录下，并重命名为nginx-service.exe，创建配置文件nginx-service.xml：
+    <!-- nginx-service.xml -->
+    <service>
+        <id>nginx-service</id>
+        <name>nginx-service</name>
+        <description>nginx-service</description>
+        <logpath>D:\develop\nginx-1.14.0\</logpath>
+        <logmode>roll</logmode>
+        <depend></depend>
+        <executable>D:\develop\nginx-1.14.0\nginx.exe</executable>
+        <stopexecutable>D:\develop\nginx-1.14.0\nginx.exe -s stop</stopexecutable>
+    </service>
+然后注册为windows服务：
+    .\nginx-service.exe install
