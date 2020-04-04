@@ -10,6 +10,7 @@
     - handou-item-service：负责商品模块对内业务的子模块
 - handou-common：通用工具类模块
 - handou-manage-web：商城后台管理平台的前端Vue页面
+- handou-upload：文件上传模块，图片存储在fastDFS服务器
 ---
 ## `配套讲解` :stuck_out_tongue_winking_eye:
 * 知乎文章：https://www.zhihu.com/people/zhaochenfei/posts
