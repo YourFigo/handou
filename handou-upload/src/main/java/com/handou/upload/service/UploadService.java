@@ -55,15 +55,24 @@ public class UploadService {
             }
 
             // 保存到文件服务器
-            // D:\\1_Code\\java\\handou\\handou-upload\\upload\\image
-//            String directory = new File("").getAbsolutePath() + "\\handou-upload\\upload\\image\\";
-//            file.transferTo(new File(directory + originalFilename));
             String ext = StringUtils.substringAfterLast(originalFilename, ".");
             StorePath storePath = this.storageClient.uploadFile(file.getInputStream(), file.getSize(), ext, null);
+            /*
+            // 一开始保存在本地
+            // D:\\1_Code\\java\\handou\\handou-upload\\upload\\image
+            // String directory = new File("").getAbsolutePath() + "\\handou-upload\\upload\\image\\";
+            // file.transferTo(new File(directory + originalFilename));
+             */
 
             // 返回url，进行回写
-//            return "http://image.handou.com/" + originalFilename;
-            return "http://image.handou.com/" + storePath.getFullPath();
+            // 由于我的图片服务器在腾讯云主机上，不能通过未备案的域名访问，得换成自己备案过的域名
+            return "http://www.figogo.cn/" + storePath.getFullPath();
+            /*
+            // 开始存在本地
+            // return "http://image.handou.com/" + originalFilename;
+            // 回来换成图片服务器
+            // return "http://image.handou.com/" + storePath.getFullPath();
+             */
 
         } catch (IOException e) {
             LOGGER.info("服务器内部错误：{}", originalFilename);
