@@ -76,10 +76,10 @@
           }).then(() => {
             // 关闭窗口
             this.$emit("close");
-            this.$message.success("保存成功！");
+            this.$message.success((this.isEdit ? "修改" : "新增") + "成功！");
           })
             .catch(() => {
-              this.$message.error("保存失败！");
+              this.$message.error((this.isEdit ? "修改" : "新增") + "失败！");
             });
         }
       },
