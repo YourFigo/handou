@@ -17,6 +17,6 @@ public interface CategoryMapper extends Mapper<Category> {
      * @param bid
      * @return
      */
-    @Select("SELECT * FROM tb_brand WHERE id IN (SELECT brand_id FROM tb_category_brand WHERE brand_id = #{bid})")
-    List<Category> queryCategoryByBrandId(String bid);
+    @Select("SELECT * FROM tb_category WHERE id IN (SELECT category_id FROM tb_category_brand WHERE brand_id = #{bid})")
+    List<Category> queryCategoryByBrandId(Long bid);
 }

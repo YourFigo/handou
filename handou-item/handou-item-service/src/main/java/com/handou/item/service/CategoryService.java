@@ -33,7 +33,7 @@ public class CategoryService {
      * @param bid
      * @return
      */
-    public List<Category> queryCategoryByBrandId(String bid) {
+    public List<Category> queryCategoryByBrandId(Long bid) {
         return this.categoryMapper.queryCategoryByBrandId(bid);
     }
 }

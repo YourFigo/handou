@@ -55,7 +55,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("bid/{bid}")
-    public ResponseEntity<List<Category>> queryCategoryByBrandId(@PathVariable String bid){
+    public ResponseEntity<List<Category>> queryCategoryByBrandId(@PathVariable Long bid){
         List<Category> list = this.categoryService.queryCategoryByBrandId(bid);
         if (list == null || list.size() < 1){
             return ResponseEntity.notFound().build();
