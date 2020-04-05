@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,5 +47,14 @@ public class CategoryController {
         }
         // 200：查询成功
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("bid/{bid}")
+    public ResponseEntity<List<Category>> queryCategoryByBrandId(@PathVariable String bid){
+        List<Category> list = this.categoryService.queryCategoryByBrandId(bid);
+        if (list == null || list.size() < 1){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(list);
     }
 }
