@@ -80,6 +80,28 @@ public class BrandService {
         }
     }
 
+    /**
+     * 修改品牌
+     * @param brand
+     * @param cids
+     */
+    @Transactional
+    public void updateBrand(Brand brand, List<Long> cids) {
+        // 先修改Brand
+        Boolean flag = this.brandMapper.updateByPrimaryKey(brand) == 1;
+        // 后修改中间表
+        if (flag){
+            this.brandMapper.deleteCategoryAndBrand(brand.getId());
+            cids.forEach(cid ->{
+                this.brandMapper.insertCategoryAndBrand(cid, brand.getId());
+            });
+        }
+    }
+
+    /**
+     * 删除品牌
+     * @param bid
+     */
     @Transactional
     public void deleteBrand(Long bid) {
         int categorySize = this.categoryMapper.queryCategoryByBrandId(bid).size();
