@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.handou.common.pojo.PageResult;
 import com.handou.item.mapper.BrandMapper;
+import com.handou.item.mapper.CategoryMapper;
 import com.handou.item.pojo.Brand;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class BrandService {
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     /**
      * 根据查询条件分页查询并排序品牌信息
@@ -73,6 +77,15 @@ public class BrandService {
             cids.forEach(cid ->{
                 this.brandMapper.insertCategoryAndBrand(cid, brand.getId());
             });
+        }
+    }
+
+    @Transactional
+    public void deleteBrand(Long bid) {
+        int categorySize = this.categoryMapper.queryCategoryByBrandId(bid).size();
+        Boolean flag = this.brandMapper.deleteCategoryAndBrand(bid) == categorySize;
+        if (flag){
+            this.brandMapper.deleteByPrimaryKey(bid);
         }
     }
 }
