@@ -28,6 +28,11 @@ public class CategoryService {
         return this.categoryMapper.select(record);
     }
 
+    /**
+     * 根据品牌id查询种类信息
+     * @param bid
+     * @return
+     */
     public List<Category> queryCategoryByBrandId(String bid) {
         return this.categoryMapper.queryCategoryByBrandId(bid);
     }

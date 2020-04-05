@@ -49,6 +49,11 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
+    /**
+     * 根据品牌id查询种类信息
+     * @param bid
+     * @return
+     */
     @GetMapping("bid/{bid}")
     public ResponseEntity<List<Category>> queryCategoryByBrandId(@PathVariable String bid){
         List<Category> list = this.categoryService.queryCategoryByBrandId(bid);
