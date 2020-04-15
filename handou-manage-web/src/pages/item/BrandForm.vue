@@ -75,6 +75,7 @@
             data: this.$qs.stringify(params)
           }).then(() => {
             // 关闭窗口
+              this.$options.methods.clear();
             this.$emit("close");
             this.$message.success((this.isEdit ? "修改" : "新增") + "成功！");
           })

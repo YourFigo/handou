@@ -49,7 +49,7 @@
         </v-toolbar>
         <!--对话框的内容，表单-->
         <v-card-text class="px-5" style="height:400px">
-          <brand-form @close="closeWindow" :oldBrand="oldBrand" :isEdit="isEdit" ref="myBrandForm"/>
+          <brand-form @close="closeWindow" :oldBrand="oldBrand" :isEdit="isEdit"/>
         </v-card-text>
       </v-card>
     </v-dialog>
